@@ -1,9 +1,11 @@
 package com.example.myapplication4;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.text.SimpleDateFormat;
@@ -19,12 +21,27 @@ public class MainActivity extends AppCompatActivity {
 
         EditText editTextName = findViewById(R.id.editTextName);
         Button buttonSend = findViewById(R.id.buttonSend);
+        ImageView imageView = findViewById(R.id.imageView);
 
         buttonSend.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SecondActivity.class);
             intent.putExtra("username", editTextName.getText().toString());
             startActivityForResult(intent, REQUEST_CODE);
         });
+
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        if (Intent.ACTION_VIEW.equals(action)) {
+            Uri imageUri = intent.getData();
+            if (imageUri != null) {
+                imageView.setImageURI(imageUri);
+            }
+        } else if (Intent.ACTION_SEND.equals(action)) {
+            Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            if (imageUri != null) {
+                imageView.setImageURI(imageUri);
+            }
+        }
     }
 
     @Override
