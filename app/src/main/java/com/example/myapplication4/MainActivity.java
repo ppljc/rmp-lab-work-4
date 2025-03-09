@@ -21,12 +21,19 @@ public class MainActivity extends AppCompatActivity {
 
         EditText editTextName = findViewById(R.id.editTextName);
         Button buttonSend = findViewById(R.id.buttonSend);
+        Button buttonPlayMarket = findViewById(R.id.buttonPlayMarket);
         ImageView imageView = findViewById(R.id.imageView);
 
         buttonSend.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SecondActivity.class);
             intent.putExtra("username", editTextName.getText().toString());
             startActivityForResult(intent, REQUEST_CODE);
+        });
+
+        buttonPlayMarket.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("market://details?id=com.example.myapplication4"));
+            startActivity(intent);
         });
 
         Intent intent = getIntent();
