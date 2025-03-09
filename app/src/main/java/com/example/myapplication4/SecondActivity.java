@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.Calendar;
 
 public class SecondActivity extends AppCompatActivity {
     @Override
@@ -21,7 +22,10 @@ public class SecondActivity extends AppCompatActivity {
         textViewName.setText(name);
 
         buttonOk.setOnClickListener(v -> {
-            long dateInMillis = datePicker.getCalendarView().getDate();
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+            long dateInMillis = calendar.getTimeInMillis();
+
             Intent resultIntent = new Intent();
             resultIntent.putExtra("selectedDate", dateInMillis);
             setResult(RESULT_OK, resultIntent);
